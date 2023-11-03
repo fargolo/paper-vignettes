@@ -4,24 +4,32 @@ include("src/SymbolicInference.jl")
 
 # Hyperparams
 my_seed = 1234
-cycles = 8
-sd_norm = 1
+cycles = 2
+sd_norm = 0.5
 rec_rate = 0.5
 
 rng = MersenneTwister(my_seed)
 
 time_series_sin = map(sin,0:0.3:2*pi*cycles)
+
 n_sample=length(time_series_sin)
 dist = Normal(0,sd_norm)
 time_series = rand(dist,n_sample)
+
 time_series_sin_nois = time_series .+ time_series_sin
+
 p_tsn = plot(1:length(time_series_sin_nois),time_series_sin_nois)
 p_sin = plot(1:length(time_series_sin_nois),time_series_sin)
 p_r = plot(1:length(time_series_sin_nois),time_series)
 plot(p_tsn,p_sin,p_r,layout=(3,1))
 res_recs = map(x -> RecurrenceAnalysis.RecurrenceMatrix(x,rec_rate;fixedrate=true),
         [time_series_sin_nois,time_series_sin,time_series])
-        res_infs = map(x -> double_inference(x,rec_rate;fixedrate=true),res_recs)
+
+res_recs[1] 
+n = size(res_recs[1])[1]
+[ res_recs[1][i,i] for i=1:n ]
+[ res_recs[1][n-i+1,i] for i=1:n ]
+res_infs = map(x -> double_inference(x,rec_rate),res_recs)
 
 
 time_series_sin_nois = RecurrenceAnalysis.RecurrenceMatrix(time_series_sin_nois,rec_rate;fixedrate=true)

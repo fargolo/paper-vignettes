@@ -2,6 +2,28 @@ using Distributed
 using SharedArrays
 #addprocs(2)
 
+my_seed = 1234
+cycles = 8
+sd_norm = 0.5
+rec_rate = 0.5
+
+rng = MersenneTwister(my_seed)
+
+time_series_sin = map(sin,0:0.3:2*pi*cycles)
+
+n_sample=length(time_series_sin)
+dist = Normal(0,sd_norm)
+time_series = rand(dist,n_sample)
+
+time_series_sin_nois = time_series .+ time_series_sin
+
+
+p_tsn = plot(1:length(time_series_sin_nois),time_series_sin_nois)
+p_sin = plot(1:length(time_series_sin_nois),time_series_sin)
+p_r = plot(1:length(time_series_sin_nois),time_series)
+plot(p_tsn,p_sin,p_r,layout=(3,1))
+
+
 @everywhere begin
         using Pkg;
         include("src/SymbolicInference.jl") 
@@ -12,8 +34,8 @@ end
         using Plots
 
         my_seed = 1234
-        cycles = 3
-        sd_norm = 1
+        cycles = 6
+        sd_norm = 0.5
         rec_rate = 0.2
 
         rng = MersenneTwister(my_seed)
