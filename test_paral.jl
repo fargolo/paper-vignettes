@@ -3,9 +3,9 @@ using SharedArrays
 #addprocs(2)
 
 my_seed = 1234
-cycles = 8
+cycles = 6
 sd_norm = 0.5
-rec_rate = 0.5
+rec_rate = 0.2
 
 rng = MersenneTwister(my_seed)
 
