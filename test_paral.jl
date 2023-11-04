@@ -1,5 +1,7 @@
 using Distributed
 using SharedArrays
+using Plots
+include("src/SymbolicInference.jl") 
 #addprocs(2)
 
 my_seed = 1234
@@ -21,7 +23,7 @@ time_series_sin_nois = time_series .+ time_series_sin
 p_tsn = plot(1:length(time_series_sin_nois),time_series_sin_nois)
 p_sin = plot(1:length(time_series_sin_nois),time_series_sin)
 p_r = plot(1:length(time_series_sin_nois),time_series)
-plot(p_tsn,p_sin,p_r,layout=(3,1))
+p_3_series = plot(p_tsn,p_sin,p_r,layout=(3,1))
 
 
 @everywhere begin
@@ -69,6 +71,10 @@ p_sin_r = plot(ps_sin_r[1],ps_sin_r[2],ps_sin_r[3],layout=(3,1);ylims = (0, 0.3)
 p_sin = plot(ps_sin[1],ps_sin[2],ps_sin[3],layout=(3,1);ylims = (0, 0.3),title="Poincare")
 p_r = plot(ps_r[1],ps_r[2],ps_r[3],layout=(3,1);ylims = (0, 0.3),title="Recurrence")
 
-plot(p_sin_r,p_sin,p_r,layout=(1,3),size=(1600,1600))
-plot(p_sin_r[3],p_sin[3],p_r[3]; title = "Sin(x) vs. N(0,1)")
+p_3_hypothesis = plot(p_sin_r,p_sin,p_r,layout=(1,3),size=(1600,1600))
 
+l = @layout [
+    a{0.3w} b{0.7w}
+]
+
+plot(p_3_series,p_3_hypothesis,layout=l)
