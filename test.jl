@@ -26,10 +26,12 @@ res_recs = map(x -> RecurrenceAnalysis.RecurrenceMatrix(x,rec_rate;fixedrate=tru
         [time_series_sin_nois,time_series_sin,time_series])
 
 res_recs[1] 
+double_inference_weighted(res_recs[1])
+
 n = size(res_recs[1])[1]
 [ res_recs[1][i,i] for i=1:n ]
 [ res_recs[1][n-i+1,i] for i=1:n ]
-res_infs = map(x -> double_inference(x,rec_rate),res_recs)
+res_infs = map(x -> double_inference_weighted(x),res_recs)
 
 
 time_series_sin_nois = RecurrenceAnalysis.RecurrenceMatrix(time_series_sin_nois,rec_rate;fixedrate=true)

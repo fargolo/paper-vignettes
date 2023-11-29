@@ -5,6 +5,7 @@
 # NOTE: Periodicity results in several significant 
 ### intervals Sharkovskii's theorem
 
+# Already available on new AnalyticComb (v>1.0.5) as bin_words_with_k_occurences_constr
 function bin_words_with_k_occurences_constr(k,n,d)
     accum = []
     for j in 0:Int(round(n/d))
