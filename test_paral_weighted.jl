@@ -5,7 +5,7 @@ include("src/SymbolicInference.jl")
 #addprocs(2)
 
 my_seed = 1234
-cycles = 6
+cycles = 2
 sd_norm = 0.5
 rec_rate = 0.2
 
@@ -36,7 +36,7 @@ end
         using Plots
 
         my_seed = 1234
-        cycles = 5
+        cycles = 2
         sd_norm = 0.5
         rec_rate = 0.2
 

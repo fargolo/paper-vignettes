@@ -1,36 +1,67 @@
 using Plots
 
+include("../src/SymbolicInference.jl")
 
-include("src/SymbolicInference.jl")
+# Time-series types:  
+## Sine wave
+## White noise
+## Noisy sine wave
+## Gaussian random walk (AR1)
 
 # Hyperparams
 my_seed = 1234
-cycles = 6
+cycles = 8
 sd_norm = 0.5
 rec_rate = 0.5
 
-rng = MersenneTwister(my_seed)
+
+# Sine wave 
 
 time_series_sin = map(sin,0:0.3:2*pi*cycles)
 
+# White noise  
+
+rng = MersenneTwister(my_seed)
 n_sample=length(time_series_sin)
 dist = Normal(0,sd_norm)
-time_series = rand(dist,n_sample)
+white_n_time_series = rand(dist,n_sample)
 
-time_series_sin_nois = time_series .+ time_series_sin
+# Noisy sine wave
+time_series_sin_nois = white_n_time_series .+ time_series_sin
 
-p_tsn = plot(1:length(time_series_sin_nois),time_series_sin_nois)
-p_sin = plot(1:length(time_series_sin_nois),time_series_sin)
-p_r = plot(1:length(time_series_sin_nois),time_series)
-plot(p_tsn,p_sin,p_r,layout=(3,1))
+# Gaussian random walk (AR1)
+## https://discourse.julialang.org/t/simple-random-walk-performance-tips/61553/2
+
+function rand_walk_gauss(ts_size;dist = Normal(0,1))
+        ts = []
+        push!(ts,rand(dist,1)[1])
+        for i in 2:ts_size
+                cur_val = ts[i-1] + rand(dist,1)[1]
+                push!(ts,cur_val)
+        end
+        Float64.(ts)
+end
+
+rand_walk_gauss_ts = rand_walk_gauss(n_sample)
+
+## Sine wave
+p_sin = plot(1:length(time_series_sin_nois),time_series_sin,title="Sine wave")
+## White noise
+p_wn = plot(1:length(time_series_sin_nois),white_n_time_series,title="White noise")
+## Noisy sine wave
+p_tsn = plot(1:length(time_series_sin_nois),time_series_sin_nois,title="Sine wave + white noise")
+## Gaussian random walk (AR1)
+p_rwg = plot(1:length(time_series_sin_nois),rand_walk_gauss_ts,title="Gauss Rand walk - N(0,1)")
+
+p_series = plot(p_sin,p_wn,p_tsn,p_rwg,layout=(1,4))
+
 res_recs = map(x -> RecurrenceAnalysis.RecurrenceMatrix(x,rec_rate;fixedrate=true),
-        [time_series_sin_nois,time_series_sin,time_series])
+        [time_series_sin,white_n_time_series,time_series_sin_nois,rand_walk_gauss_ts])
 
-ps = map(heatmap,res_recs)
-plot(ps...;size= (2048,512),layout=(1,3))
+ps = map(x -> heatmap(x,legend = false),res_recs)
+p_recs = plot(ps...;size= (2048,512),layout=(1,4))
 
-rqa(res_recs[3])
-rqa(res_recs[1])
+plot(p_series,p_recs,layout=(2,1))
 
 double_inference_weighted(res_recs[1])
 
