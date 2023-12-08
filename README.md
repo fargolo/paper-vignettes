@@ -11,13 +11,14 @@ White-paper link: https://docs.google.com/document/d/1giF2vcG8dcEHf4SONktg21Kk9K
 
 ## To do (Roadmap)  
 
-1 - Implement solution for non-uniform distribution ($p \neq q$).  
+1 - Lower-order windows only?  
 
 2 - Results on simulated data.  
--- Brownian Motion
--- Random Walk
+-- Gaussian Random Walk  
 -- White Noise
+-- Periodic signal (sine wave)
+-- Noisy periodic signal (white noise + sine wave)  
 
 The `double_inference` function uses the solution for the consecutive runs problem (Flaj. & Sedgewick, page 52.   and R ÉV ÉSZ , P. Strong theorems on coin tossing. In Proceedings of the International Congress of Mathematicians (Helsinki, 1978) (Helsinki, 1980), Acad. Sci. Fennica, pp. 749–754.)  
 
-Run the `test_paral.jl` file to obtain current results.  
+Run the `test_paral_weighted.jl` file to obtain current results.  

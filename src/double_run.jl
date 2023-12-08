@@ -57,14 +57,23 @@ end
 
 
 
-function double_inference_weighted(rec_matrix::RecurrenceMatrix;seqs="double")
+function double_inference_weighted(rec_matrix::RecurrenceMatrix;seqs="double",max_window=6)
 
     if seqs ∉ ["double","recurrences","poincare"]
         println("seqs must be either 'double', 'recurrences' or 'poincare'")
         return(NaN)
     end 
-        
-    mat_len = first(size(rec_matrix))
+    
+
+    mat_len = dim(rec_matrix)
+    
+    if mat_len < max_window
+        println("max_window must be smaller than matrix length")
+        return(NaN)
+    end 
+    
+
+    
     probs = Float64[]
 
     p = recurrencerate(rec_matrix)
@@ -77,7 +86,7 @@ function double_inference_weighted(rec_matrix::RecurrenceMatrix;seqs="double")
     # To do: implement map instead of for loop 
     # sequences = map(x-> diag(Matrix(rec_matrix),x), 1:size(rec_matrix)[1])
 
-    for i in 1:(mat_len)
+    for i in 1:max_window
         cur_len = mat_len - i
         col_counts = StatsBase.rle(LinearAlgebra.diag(Matrix(rec_matrix),i))
         zipped_tups = collect(zip(col_counts[2],col_counts[1]))
