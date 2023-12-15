@@ -99,7 +99,7 @@ function double_inference_weighted(rec_matrix::RecurrenceMatrix;seqs="double",ma
 
         println("Zipped tuples: ")
         print(zipped_tups)
-        println("Current segment length: ")
+        println("\n Current segment length: ")
         print(cur_len)
         
         try

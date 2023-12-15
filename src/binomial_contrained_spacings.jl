@@ -7,7 +7,7 @@
 
 # Already available on new AnalyticComb (v>1.0.5) as bin_words_with_k_occurences_constr
 function bin_words_with_k_occurences_constr(k,n,d)
-    accum = []
+    accum = Int128[]
     for j in 0:Int(round(n/d))
         if(j>=k-1  || j*d >=n)
             break
@@ -17,7 +17,7 @@ function bin_words_with_k_occurences_constr(k,n,d)
         print("\naccum is ",acc)
         push!(accum,acc)
     end
-    print("\nSum is ")
+    print("\nSum is \n")
     sum(accum)
 end
 
