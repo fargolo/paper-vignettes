@@ -7,6 +7,6 @@ using AnalyticComb
 using Distributions
 using LinearAlgebra
 
-include("double_run.jl")
+include("double_run_native.jl")
 include("unordered.jl")
 include("systems.jl")

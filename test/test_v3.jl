@@ -12,7 +12,8 @@ include("../src/SymbolicInference.jl")
 my_seed = 1234
 cycles = 8 # cycles on sin wave
 rec_rate = 0.5
-p_window_size = 10
+sd_norm = 0.5
+p_window_size = 50
 
 # Sine wave 
 
