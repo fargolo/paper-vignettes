@@ -47,14 +47,14 @@ function double_inference_weighted(rec_matrix::RecurrenceMatrix;seqs="double",ma
         
         try
             max_val = maximum(first.(zipped_tups))
-            println("Diagonal largest sequence size and total length are")
+            println("\nDiagonal largest sequence size and total length are")
             print(max_val,cur_len)
             cur_p = p_val_weighted(p,q,max_val,cur_len)
-            println("Probability:")
+            println("\nProbability:")
             print(cur_p)
             push!(probs,cur_p)
         catch e
-            println("Sequence has zero occurences.")
+            println("\nSequence has zero occurences.")
             push!(probs,NaN)
         end         
         
