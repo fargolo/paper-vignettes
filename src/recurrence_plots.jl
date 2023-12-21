@@ -1,12 +1,19 @@
+"""
+double_inference_weighted(rec_matrix::RecurrenceMatrix;seqs="double",max_window=6)
 
+Returns set of probabilities associated with consecutive runs in off-diagonals.
 
+Argument `seqs` sets the type of consecutive sequences.  
+Could be either 'double' (recurrences and non-recurrences), 'recurrences' or 'poincare' (non-recurrences).  
+The first n diagonals (given by `max_window` argument) are considered.
+See `AnalyticComb.p_val_weighted` and  `AnalyticComb.weighted_bin_runs_coeff`.  
+"""
 function double_inference_weighted(rec_matrix::RecurrenceMatrix;seqs="double",max_window=6)
 
     if seqs ∉ ["double","recurrences","poincare"]
         println("seqs must be either 'double', 'recurrences' or 'poincare'")
         return(NaN)
     end 
-    
 
     mat_len = dim(rec_matrix)
     
@@ -15,7 +22,6 @@ function double_inference_weighted(rec_matrix::RecurrenceMatrix;seqs="double",ma
         return(NaN)
     end 
     
-
     
     probs = Float64[]
 
@@ -65,51 +71,3 @@ function double_inference_weighted(rec_matrix::RecurrenceMatrix;seqs="double",ma
 end
 
 
-
-function p_val_weighted(p,q,l,n)
-
-    if (p+q - 1 > 0.01) || (l > n)
-        println("p + q must be equal to 1 and l <= n")
-            return(NaN)
-    end 
-
-    weighted_coeffs = map(x->weighted_bin_runs_coeff(p,q,x,n),(l-1):1:n)
-    probs = diff(weighted_coeffs)
-    Float64(sum(probs))
-
-end
-
-wei_mgf(p,q,l,z) = (1 - p^l * z^l )/(1 - z + q*(p^l)*(z^(l+1)))
-
-function weighted_bin_runs_coeff(p,q,l,n)
-
-    if (p+q - 1 > 0.01) || (l > n)
-        println("p + q must be equal to 1 and l <= n")
-            return(NaN)
-    end 
-
-    #z = TaylorSeries.set_variables("z") 
-#   wei_mgf = (1 - p^l * z^l )/(1 - z + q*(p^l)*(z^(l+1))) # OGF
-    #coefs = collect(series(wei_mgf,z,0,n+1),z)
-    #getcoeff(taylor_expand(z -> wei_mgf(z),order=n_tot+1),n_tot)
-    tay_exp = TaylorSeries.taylor_expand(z -> wei_mgf(p,q,l,z),order=n+1)
-    TaylorSeries.getcoeff(tay_exp,n)
-
-end
-
-#@benchmark weighted_bin_runs_coeff(0.2,0.8,5,78)
-#@benchmark weighted_bin_runs_coeff_bcp(0.2,0.8,5,78)
-
-#function weighted_bin_runs_coeff_bcp(p,q,l,n)
-#
-#    if (p+q - 1 > 0.01) || (l > n)
-#        println("p + q must be equal to 1 and l <= n")
-#            return(NaN)
-#    end 
-#
-#    z = SymPy.symbols("z") 
-#    wei_mgf = (1 - p^l * z^l )/(1 - z + q*(p^l)*(z^(l+1))) # OGF
-#    coefs = collect(series(wei_mgf,z,0,n+1),z)
-#    coefs.coeff(z,n)
-#
-#end

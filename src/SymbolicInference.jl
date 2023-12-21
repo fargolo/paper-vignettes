@@ -7,6 +7,5 @@ using AnalyticComb
 using Distributions
 using LinearAlgebra
 
-include("double_run_native.jl")
-include("unordered.jl")
+include("recurrence_plots.jl")
 include("systems.jl")
