@@ -1,3 +1,6 @@
+using StatsBase
+using LinearAlgebra
+
 """
 double_inference_weighted(rec_matrix::RecurrenceMatrix;seqs="double",max_window=6)
 
