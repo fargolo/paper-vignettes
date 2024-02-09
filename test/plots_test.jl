@@ -6,6 +6,7 @@ using StatsPlots
 # Series
 
 ## Hyperparams
+my_seed = 1234
 cycles = 8 # cycles on sin wave
 sd_norm = 0.5
 p_window_size = 50

@@ -1,7 +1,7 @@
 using Plots
 
 using Pkg
-Pkg.add(path="/home/boitata/sandbox/SymbolicInference.jl")
+Pkg.add(path="/home/boitata/repos/SymbolicInference.jl")
 using SymbolicInference
 
 include("/home/boitata/sandbox/paper-vignettes/src/VignetteDependencies.jl")

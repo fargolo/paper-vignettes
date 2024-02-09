@@ -1174,7 +1174,7 @@ version = "1.2.1"
 
 [[deps.SymbolicInference]]
 deps = ["AnalyticComb", "Distributions", "LinearAlgebra", "Random", "RecurrenceAnalysis", "StatsBase"]
-git-tree-sha1 = "ff321ab2d50d2a5f49ed3153c011bfb794bb94aa"
+git-tree-sha1 = "fc22266172e94ef6ea2c42220a8d7a6b5571134e"
 repo-rev = "main"
 repo-url = "/home/boitata/repos/SymbolicInference.jl"
 uuid = "0c4721b3-3133-403d-859d-6fdff663af57"
