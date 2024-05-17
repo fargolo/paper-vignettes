@@ -51,14 +51,12 @@ res_recs3 = map(x -> RecurrenceAnalysis.RecurrenceMatrix(x,0.8;fixedrate=true),
         [time_series_sin,white_n_time_series,time_series_sin_nois,rand_walk_gauss_ts50,rand_walk_gauss_ts90])
 
 
-myscheme = ColorScheme([Colors.RGB(0.94118, 0.60784, 0.58823), 
-                        Colors.RGB(0.67058, 0.3843137, 0.3607843)],
-               "custom", "twotone, red and green")
+#myscheme = ColorScheme([Colors.RGB(0.94118, 0.60784, 0.58823), 
+#                        Colors.RGB(0.67058, 0.3843137, 0.3607843)],
+#               "custom", "twotone, red and green")
+#loadcolorscheme(:myscheme,ColorScheme([get(myscheme, i) for i in 0.0:0.01:1.0]))
 
-
-
-loadcolorscheme(:myscheme,ColorScheme([get(myscheme, i) for i in 0.0:0.01:1.0]))
-ps = map(x -> heatmap(x,legend = false,c= :myscheme),res_recs)
+ps = map(x -> heatmap(x,legend = false,c= :starrynight),res_recs)
 p_recs = plot(ps...;size= (2560,512),layout=(1,5))
 ps2 = map(x -> heatmap(x,legend = false,c= :starrynight),res_recs2)
 p_recs2 = plot(ps2...;size= (2560,512),layout=(1,5))
@@ -76,13 +74,13 @@ p_series_recs = plot(p_series,p_recs,p_recs2,p_recs3,layout=(4,1),size= (2560,20
 
 p_plots = []
 for i in 1:5
-    p = plot()
+    p = plot(ylimits=(0,1))
     # "Each window" level
     p_vals_all_windows = []
     for z in 1:30
         p_vals = Float64[]
         # Get values over samples
-        for j in 1:1000
+        for j in 1:300
             push!(p_vals,series_probs[j][i][z])
         end
         println("p_vals is: ",p_vals)
@@ -106,3 +104,5 @@ l = @layout [
      b{0.2h}]
              
 plot(p_series_recs,p_boxs,layout=l)
+
+p_boxs2 = plot(p_plots...,layout=(5,1),size=(1024,1024),legend=false)

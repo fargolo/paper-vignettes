@@ -1,10 +1,7 @@
 using Plots
-
-using Pkg
-Pkg.add(path="/home/boitata/repos/SymbolicInference.jl")
 using SymbolicInference
 
-include("/home/boitata/sandbox/paper-vignettes/src/VignetteDependencies.jl")
+include("../src/VignetteDependencies.jl")
 
 # Script hyperparams
 sample_sizes = [300,1000]
@@ -40,7 +37,9 @@ for  cycles in all_cycles
                        res_recs = map(x -> RecurrenceAnalysis.RecurrenceMatrix(x,rec_rate;fixedrate=true),
                               [time_series_sin,white_n_time_series,time_series_sin_nois,rand_walk_gauss_ts50,rand_walk_gauss_ts90])
 
-                       all_probs = map(x-> double_inference_weighted(x;max_window=p_window_size,seqs="recurrences"),res_recs)
+                       all_probs = map(x-> double_inference_weighted(x;
+                                        max_window=p_window_size,seqs="recurrences"),res_recs)
+                    
                        push!(series_probs,all_probs)
                 end
                 
@@ -93,3 +92,6 @@ for  cycles in all_cycles
         output_df = CSV.write("outputs/Nsamples"*string(sample_size)*"SeriesSize"*string(n_sample)*".csv",vcat(dfs...))
 end
 end
+
+# using JLD2
+# jldsave("outputs/full_sim.jld2"; series_probs)
