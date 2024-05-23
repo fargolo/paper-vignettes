@@ -1,20 +1,8 @@
 # SymbolicInference.jl
-Probability-based inferences based on the symbolic method.  
+Probability-based inference based on the symbolic method for recurrence quantification analysis.  
 
-White-paper link: https://docs.google.com/document/d/1giF2vcG8dcEHf4SONktg21Kk9KU5SXEAyO0fpNnyINY/edit#heading=h.d898sqp17elx  
+White-paper link: https://osf.io/preprints/osf/3ws85
 
-## Time-series  
+[](https://github.com/fargolo/paper-vignettes/outputs/anim3_fps15.gif)  
+[](https://github.com/fargolo/paper-vignettes/outputs/res_3_join_ma_rr06_unit.png)  
 
-### Chaotic, non-linear systems and recurrence analysis 
-
-The recurrence of states, in the meaning that states are again arbitrarily close after some time of divergence, is a fundamental property of deterministic dynamical systems and is typical for nonlinear or chaotic systems.  
-
-Poincaré discusse this property in 1890 and it was later proved by Constantin Carathéodory (see Poincaré recurrence theorem). Further on, several techniques address recurrences in dynamical systems for inference.  
-
-Recurrence plots (RPs) were creature to capture such patterns and several parameters that caractherize the underlying time-series can be obtained with recurrence quantification analysis (RQA). 
-
-Since each pair of states is mapped into a binary value ('close enough',1, or 'not close enough',0), making probabilistic inference with symbolic methods is straightforward.  
-
-The procedure in `double_inference_weighted()` iterates over [recurrence matrices](https://juliadynamics.github.io/DynamicalSystemsDocs.jl/recurrenceanalysis/stable/) diagonals and checks whether the size of the longest consecutive sequence is unexpectedly large.  
-
-## Graphs  
