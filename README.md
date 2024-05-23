@@ -3,6 +3,6 @@ Probability-based inference based on the symbolic method for recurrence quantifi
 
 White-paper link: https://osf.io/preprints/osf/3ws85
 
-![](https://github.com/fargolo/paper-vignettes/outputs/anim3_fps15.gif)  
-![](https://github.com/fargolo/paper-vignettes/outputs/res_3_join_ma_rr06_unit.png)  
+![](https://raw.githubusercontent.com/fargolo/paper-vignettes/master/outputs/anim3_fps15.gif)  
+![](https://raw.githubusercontent.com/fargolo/paper-vignettes/master/outputs/res_3_join_ma_rr06_unit.png)  
 
