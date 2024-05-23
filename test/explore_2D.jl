@@ -80,6 +80,7 @@ rec_matrix_ma_motifs_joint = SymbolicInference.rec_matrix_motifs(rec_matrix_join
 
 coordinates_ma_joint =  SymbolicInference.extract_recurrences_joint(ts_ma_unit_d, ts_ma_unit_p, rec_matrix_ma_motifs_joint; num_windows=100)
 coordinates_ma_joint
+GLMakie.activate!(inline=false)
 p = SymbolicInference.plot_motifs_joint(ts_ma_unit_d, ts_ma_unit_p,
 coordinates_ma_joint[10:end];n_motifs=1)
 
