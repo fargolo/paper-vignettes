@@ -3,6 +3,7 @@ using DataFrames
 using SymbolicInference
 using RecurrenceAnalysis
 using Normalization 
+using CairoMakie
 
 rec_rate = 0.3;
 
@@ -46,6 +47,9 @@ ts_ma_unit_d = normalize(ts_ma_d, norm_fit_ma_d)
 
 norm_max_fit_ma_d = fit(MinMax, ts_ma_d)
 ts_ma_max_d = normalize(ts_ma_d, norm_max_fit_ma_d)
+
+#
+persistence_motifs(ts_ma_max_d;n_windows=50)
 
 ## Joint Recurrence Matrix
 rec_matriz_joint = RecurrenceAnalysis.JointRecurrenceMatrix(
