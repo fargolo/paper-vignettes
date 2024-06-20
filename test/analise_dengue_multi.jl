@@ -51,6 +51,10 @@ ts_ma_max_d = normalize(ts_ma_d, norm_max_fit_ma_d)
 #
 persistence_motifs(ts_ma_max_d;n_windows=50)
 
+SymbolicInference.persistence_motifs(ts_ma_max_d; range = collect(0.1:0.1:0.9), n_windows=52)
+SymbolicInference.persistence_barcode(ts_ma_max_d; range = collect(0.1:0.1:0.9), n_windows=52,alpha_thresh=0.0001)
+
+
 ## Joint Recurrence Matrix
 rec_matriz_joint = RecurrenceAnalysis.JointRecurrenceMatrix(
     ts_raw_unit_d, ts_raw_unit_p, rec_rate; fixedrate=true)
