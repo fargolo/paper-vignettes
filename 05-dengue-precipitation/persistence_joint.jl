@@ -5,7 +5,7 @@ Return barcode plot for each window.
     Points are plotted whenever the p-value is smaller than `alpha_thresh`.  
 
 """
-function persistence_barcodev2(time_series1,time_series2; 
+function persistence_barcode_joint(time_series1,time_series2; 
     range = collect(0.1:0.1:0.9), n_windows=10,alpha_thresh=0.05)
     all_motifs = []
 
