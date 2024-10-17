@@ -14,12 +14,15 @@ logistic_ds4 = PredefinedDynamicalSystems.logistic(0.1; r = 3.5)
 logistic_ds8 = PredefinedDynamicalSystems.logistic(0.1; r = 3.56)
 logistic_ds_chaos = PredefinedDynamicalSystems.logistic(0.1; r = 3.5699456)
 
-total_time = 60
+total_time = 300
 X2, t2 = trajectory(logistic_ds2, total_time)
 X4, t4 = trajectory(logistic_ds4, total_time)
+Xc, tc = trajectory(logistic_ds_chaos, total_time)
+
 
 Plots.plot([Matrix(X2)...])
 Plots.plot([Matrix(X4)...])
+Plots.plot([Matrix(Xc)...])
 
 
 SymbolicInference.persistence_barcode([Matrix(X2)...]; 
@@ -31,12 +34,28 @@ rm_r32_thr005 = RecurrenceAnalysis.RecurrenceMatrix(X2,0.05;
                 fixedrate=true)
 rm_r35_thr005 = RecurrenceAnalysis.RecurrenceMatrix(X4,0.05;
                 fixedrate=true)
+rm_r356_thr0056 = RecurrenceAnalysis.RecurrenceMatrix(Xc,0.05;
+                fixedrate=true)
+
+
 
 rm_r32_thr005_mot = rec_matrix_motifs(rm_r32_thr005;
-        window_range=[2,4,6,8,10,12,14,16],n_motifs=1)
+        window_range=collect(1:40),n_motifs=1)
 rm_r35_thr005_mot = rec_matrix_motifs(rm_r35_thr005;
-        window_range=[4,8,12,16,20],n_motifs=1)
+        window_range=collect(1:40),n_motifs=1)
+rm_r356_thr005_mot = rec_matrix_motifs(rm_r356_thr0056;
+        window_range=collect(1:40),n_motifs=1)
 
+bin_miss(x) = ifelse(ismissing(x),true,false)
+
+a = plot(bin_miss.(rm_r32_thr005_mot["Motifs starts and duration"]))
+b = plot(bin_miss.(rm_r35_thr005_mot["Motifs starts and duration"]))
+c = plot(bin_miss.(rm_r356_thr005_mot["Motifs starts and duration"]))
+
+logis_plot = plot(a,b,c,layout = (3, 1),legend=false,
+        title=["r=3.2" "r=3.5" "r = 3.5699456"])
+
+#savefig(logis_plot,"logistic_plot.png")
 
 coords_rm_r32_thr005 = SymbolicInference.extract_recurrences([Matrix(X2)...], 
                 rm_r32_thr005_mot; num_windows=8)
