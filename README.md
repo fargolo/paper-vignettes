@@ -48,3 +48,27 @@ Methods were implemented and made available in open-source software [AnalyticCom
 -- Improve figure quality and interpretation of them.  
     -- Figure/label size.  
 
+#### Notas - Reuniao
+
+Incluir bordas (?)
+
+Fig. 1 - Measure x Time - Explicar o que eh o eixo y
+ --- Considerar explicar no label. The measure standards for simulated data that could apply to any time-series dataset.
+-- Mudar tamanho da fonte
+
+ 
+Fig. 2 -  Aumentar o tamanho da pagina 2
+  -- Considerar remover.
+
+Fig. 3 - 
+
+Fig 4, 5, 6 - Eixo 
+
+Fig. 9 - Adicionar Gaussiana 
+
+Fig. 8, 10, 11 - Figuras em tamanhos diferentes
+
+Windows - Definicao melhor de time-window (lag t-1, t-2, ..., t-k).
+
+--
+
