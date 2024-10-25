@@ -1,4 +1,5 @@
 using SymbolicInference
+using Plots
 using Random, Distributions
 using RecurrenceAnalysis
 using Statistics , StatsBase
@@ -11,7 +12,7 @@ using PredefinedDynamicalSystems
 
 logistic_ds2 = PredefinedDynamicalSystems.logistic(0.1; r = 3.2)
 logistic_ds4 = PredefinedDynamicalSystems.logistic(0.1; r = 3.5)
-logistic_ds_trans = PredefinedDynamicalSystems.logistic(0.1; r = 3.5699456)
+logistic_ds_trans = PredefinedDynamicalSystems.logistic(0.1; r = 3.56)
 logistic_ds_chaos = PredefinedDynamicalSystems.logistic(0.1; r = 4)
 
 total_time = 300
@@ -21,17 +22,17 @@ Xt, tt = trajectory(logistic_ds_trans, total_time)
 Xc, tc = trajectory(logistic_ds_chaos, total_time)
 
 
-a1 = Plots.plot([Matrix(X2)...])
-b1 = Plots.plot([Matrix(X4)...])
-c1 = Plots.plot([Matrix(Xt)...])
-d1 = Plots.plot([Matrix(Xc)...])
+a1 = Plots.plot([Matrix(X2)...][1:200])
+b1 = Plots.plot([Matrix(X4)...][1:200])
+c1 = Plots.plot([Matrix(Xt)...][1:200])
+d1 = Plots.plot([Matrix(Xc)...][1:200])
 traj_plot = plot(a1,b1,c1,d1, layout = (4, 1),legend=false,
-        title=["r=3.20" "r=3.50" "r = 3.57" "r = 4.00"])
+        title=["r = 3.20" "r = 3.50" "r = 3.56" "r = 4.00"])
 
 
 
 SymbolicInference.persistence_barcode([Matrix(Xc)...]; 
-        range = collect(0.3:0.3:0.9), n_windows=1, alpha_thresh=0.01)
+        range = collect(0.1:0.1:0.9), n_windows=1, alpha_thresh=0.05)
 
 rm_r32_thr005 = RecurrenceAnalysis.RecurrenceMatrix(X2,0.05;fixedrate=true)
 
@@ -43,13 +44,13 @@ rm_r4_thr0056 = RecurrenceAnalysis.RecurrenceMatrix(Xc,0.05; fixedrate=true)
 
 
 
-rm_r32_thr005_mot = rec_matrix_motifs(rm_r32_thr005; window_range=collect(1:40),n_motifs=1)
+rm_r32_thr005_mot = rec_matrix_motifs(rm_r32_thr005; window_range=collect(1:50),n_motifs=1)
 
-rm_r35_thr005_mot = rec_matrix_motifs(rm_r35_thr005; window_range=collect(1:40),n_motifs=1)
+rm_r35_thr005_mot = rec_matrix_motifs(rm_r35_thr005; window_range=collect(1:50),n_motifs=1)
 
-rm_r357_thr005_mot = rec_matrix_motifs(rm_r357_thr005; window_range=collect(1:40),n_motifs=1)
+rm_r357_thr005_mot = rec_matrix_motifs(rm_r357_thr005; window_range=collect(1:50),n_motifs=1)
 
-rm_r4_thr0056_mot = rec_matrix_motifs(rm_r4_thr0056; window_range=collect(1:40),n_motifs=1)
+rm_r4_thr0056_mot = rec_matrix_motifs(rm_r4_thr0056; window_range=collect(1:50),n_motifs=1)
 
 bin_miss(x) = ifelse(ismissing(x),false,true)
 
@@ -61,11 +62,11 @@ d = plot(bin_miss.(rm_r4_thr0056_mot["Motifs starts and duration"]),
 
 
 logis_plot = plot(a,b,c,d, layout = (4, 1),legend=false,
-        title=["r=3.20" "r=3.50" "r = 3.57" "r = 4.00"])
+        title=["r = 3.20" "r = 3.50" "r = 3.56" "r = 4.00"])
 
-plot(traj_plot,logis_plot,layout = (1, 2))
+multiplot = plot(traj_plot,logis_plot,layout = (1, 2))
 
-#savefig(logis_plot,"logistic_plot.png")
+#savefig(multiplot,"logistic_plot.png")
 
 coords_rm_r32_thr005 = SymbolicInference.extract_recurrences([Matrix(X2)...], 
                 rm_r32_thr005_mot; num_windows=8)
